@@ -10,9 +10,9 @@ project which uses Jellyfish client. By the end of the tutorial you'll have a
 working application that connects to the frontend dashboard using WebRTC
 technology and streams and receives camera tracks.
 
-You can check out the finished project [here](TODO).
+![Finished app](./img/app.gif)
 
-// dodaj jakis rysunek tu i screenshot albo gif :3
+You can check out the finished project [here](TODO).
 
 ## What do you need
 
@@ -88,12 +88,70 @@ In order for camera and audio to work you'll need to add some native configurati
 <Tabs>
   <TabItem value="react-native" label="React Native">
 
+You need to at least set up camera permissions.
+
+On Android add to your `AndroiManifest.xml`:
+
+```xml title=AndroidManifest.xml
+  <uses-permission android:name="android.permission.CAMERA"/>
+```
+
+For audio you'll need the `RECORD_AUDIO` permission:
+
+```xml title=AndroidManifest.xml
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+```
+
+On iOS you must set `NSCameraUsageDescription` in `Info.plist` file. You can
+edit this file in Xcode. This value is a description that is shown when iOS asks user
+for camera permission.
+
+Similarly for audio there is `NSMicrophoneUsageDescription`.
+
+For screencast there is more configuration needed, it's described [here](https://github.com/jellyfish-dev/react-native-client-sdk#ios).
+
+We also suggest setting background mode to `audio` so that the app doesn't disconnect when it's in background:
+
+```xml title=Info.plist
+<key>UIBackgroundModes</key>
+<array>
+  <string>audio</string>
+</array>
+```
+
   </TabItem>
-<TabItem value="expo-bare" label="Expo Bare workflow"></TabItem>
+   <TabItem value="expo-bare" label="Expo Bare workflow"> 
+   
+   You have two options here. You can follow configuration instructions for
+React Native (Expo Bare workflow is a React Native project after all) or if
+you're using `expo prebuild` command to set up native code you can add our Expo
+plugin. Just add it to `app.json`:
+
+```json title:app.json
+{
+  "expo": {
+    "name": "example",
+    //...
+    "plugins": ["@jellyfish-dev/react-native-membrane-webrtc"]
+  }
+}
+```
+
+</TabItem>
 
   <TabItem value="expo-eas" label="EAS Build">
 
 Jellyfish Client provides Expo plugin that should take care of native configuration for you. Just add it to `app.json`:
+
+```json title:app.json
+{
+  "expo": {
+    "name": "example",
+    //...
+    "plugins": ["@jellyfish-dev/react-native-membrane-webrtc"]
+  }
+}
+```
 
   </TabItem>
 </Tabs>
@@ -108,13 +166,14 @@ docker run -p 50000-50050:50000-50050/udp \
            -e WEBRTC_USED=true \
            -e INTEGRATED_TURN_PORT_RANGE=50000-50050 \
            -e INTEGRATED_TURN_IP=192.168.0.1 \
-           -e SERVER_API_TOKEN=token \
-           -e VIRTUAL_HOST=localhost \
+           -e INTEGRATED_TURN_LISTEN_IP=0.0.0.0 \
+           -e SERVER_API_TOKEN=development \
+           -e VIRTUAL_HOST=192.168.0.1 \
            -e SECRET_KEY_BASE=secret \
-           ghcr.io/jellyfish-dev/jellyfish:latest
+           ghcr.io/jellyfish-dev/jellyfish:edge
 ```
 
-Make sure to set `INTEGRATED_TURN_IP` to your local IP address. Without it, the mobile device won't be able to connect to the backend.
+Make sure to set `INTEGRATED_TURN_IP` and `VIRTUAL_HOST` to your local IP address. Without it, the mobile device won't be able to connect to the backend.
 
 :::tip
 
@@ -128,45 +187,88 @@ ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
 
 ### Start the dashboard web frontend
 
-// TODO chcemy dockera?
+// TODO nie wiem jak to ostatecznie bedzie wyglądać
 
 ## Connecting to the server and joining the room
 
 Our app will consist of two screens. The first one allows user to type, paste or
 scan the peer token and connect to the room. The second screen shows room participants with their video tracks.
 
-Note that normally the app gets the peer token from your backend. Here in the
-dashboard though we skip that and just copy it from the dashboard to the app for
-your convenience.
+Note that normally the app gets the peer token from your backend. In this
+example though we skip that and just copy it from the dashboard to the app for
+your convenience. Here is how to do it:
 
-// rysunek jaki jest flow apki
+![Adding mobile peer in the dashboard](./img/adding_peer.gif)
+
+### Screens
+
+For managing screens I've used React Navigation library, you're free though to use another one. Our app will contain two screens: Connect screen and Room screen:
+
+```tsx title="/App.tsx"
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ConnectScreen from "./screens/Connect";
+import RoomScreen from "./screens/Room";
+
+const Stack = createNativeStackNavigator();
+
+function App(): JSX.Element {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Connect" component={ConnectScreen} />
+        <Stack.Screen name="Room" component={RoomScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
+```
 
 ### Connect screen
 
-The UI consists of a simple text input and a few buttons. For your convenience
-we prepared a little library with useful components which you can use here. Feel
-free to use your own components though and style your app however you want!
+The UI of the Connect screen consists of a simple text input and a few buttons.
+For your convenience we prepared a little library with useful components which
+you can use here. Feel free to use your own components though and style your app
+however you want!
 
-// rysunek do czego są poszczególne przyciski i text inputy
+The flow for this screen is simple: user either copies the peer token from the
+dashboard or scans it with qr code scanner and presses Connect button. The qr
+code scanner is provided by our components library and it's completely optional,
+just for convenience.
+
+![Connect screen](./img/connect.png)
 
 The code for the UI looks like this:
 
 ```tsx title="/screens/Connect.tsx"
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { Button } from "./components/Button";
-import { TextInput } from "./components/TextInput";
-import QRCodeScanner from "./components/QRCodeScanner";
+import { View, StyleSheet } from "react-native";
+import { Button } from "../components/Button";
+import { TextInput } from "../components/TextInput";
+import { QRCodeScanner } from "../components/QRCodeScanner";
 
-function ConnectScreen(): JSX.Element {
-  const [peerToken, setPeerToken] = useState<string>();
+function ConnectScreen({ navigation }): JSX.Element {
+  const [peerToken, setPeerToken] = useState<string>("");
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TextInput placeholder="Enter peer token" value={peerToken} />
-      <Button onPress={() => {}} title="Connect" disabled={!peerToken} />
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Enter peer token"
+        value={peerToken}
+        onChangeText={setPeerToken}
+      />
+      <Button
+        onPress={() => {
+          /* to be filled */
+        }}
+        title="Connect"
+        disabled={!peerToken}
+      />
       <QRCodeScanner onCodeScanned={setPeerToken} />
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -191,14 +293,25 @@ Firstly wrap your app with `JelyfishContextProvider`:
 
 ```tsx "/App.tsx"
 import React from "react";
+// highlight-next-line
 import { JellyfishContextProvider } from "@jellyfish-dev/react-native-client-sdk";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ConnectScreen from "./screens/Connect";
+import RoomScreen from "./screens/Room";
+
+const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
   return (
     // highlight-next-line
     <JellyfishContextProvider>
-      <ConnectScreen />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Connect" component={ConnectScreen} />
+          <Stack.Screen name="Room" component={RoomScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
       // highlight-next-line
     </JellyfishContextProvider>
   );
@@ -220,30 +333,33 @@ import { useJellyfishClient } from "@jellyfish-dev/react-native-client-sdk";
 // strongly recommend setting this as an environment variable, we hardcoded it here
 // for simplicity.
 // highlight-next-line
-const JELLYFISH_URL = "ws://192.168.0.1:4000/socket/peer/websocket";
+const JELLYFISH_URL = "ws://192.168.81.152:4000/socket/peer/websocket";
 
-function ConnectScreen(): JSX.Element {
+function ConnectScreen({ navigation }): JSX.Element {
   const [peerToken, setPeerToken] = useState<string>("");
 
-  // highlight-start
+  // highlight-next-line
   const { connect } = useJellyfishClient();
 
   const connectToRoom = async () => {
     try {
-      await connect(JELLYFISH_URL, peerToken);
+      // highlight-next-line
+      await connect(JELLYFISH_URL, peerToken.trim());
     } catch (e) {
       console.log("Error while connecting", e);
     }
   };
-  // highlight-end
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TextInput placeholder="Enter peer token" value={peerToken} />
-      // highlight-next-line
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Enter peer token"
+        value={peerToken}
+        onChangeText={setPeerToken}
+      />
       <Button onPress={connectToRoom} title="Connect" disabled={!peerToken} />
       <QRCodeScanner onCodeScanned={setPeerToken} />
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -256,23 +372,44 @@ To start the camera we need to ask the user for a permission first. We'll use a
 standard React Native module for this:
 
 ```tsx title="/screens/Connect.tsx"
-const connectToRoom = async () => {
-  try {
-    await connect(JELLYFISH_URL, peerToken);
+import { View, StyleSheet, Permission, PermissionsAndroid } from "react-native";
 
-    // highlight-start
+// ...
+
+function ConnectScreen({ navigation }): JSX.Element {
+  // ...
+
+  // highlight-start
+  const grantedCameraPermissions = async () => {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.CAMERA as Permission
     );
     if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
       console.error("Camera permission denied");
-      return;
+      return false;
     }
-    // highlight-end
-  } catch (e) {
-    console.log("Error while connecting", e);
-  }
-};
+    return true;
+  };
+  // highlight-end
+
+  const connectToRoom = async () => {
+    try {
+      await connect(JELLYFISH_URL, peerToken.trim());
+
+      // highlight-start
+      if (!(await grantedCameraPermissions())) {
+        return;
+      }
+      // highlight-end
+    } catch (e) {
+      console.log("Error while connecting", e);
+    }
+  };
+
+  // ...
+}
+
+// ...
 ```
 
 ### Starting the camera
@@ -291,30 +428,27 @@ import {
   useCamera,
 } from "@jellyfish-dev/react-native-client-sdk";
 
-function ConnectScreen(): JSX.Element {
-  const [peerToken, setPeerToken] = useState<string>("");
+function ConnectScreen({ navigation }): JSX.Element {
+  // ...
 
-  const { connect } = useJellyfishClient();
   // highlight-next-line
   const { startCamera } = useCamera();
 
   const connectToRoom = async () => {
     try {
-      await connect(JELLYFISH_URL, peerToken);
+      await connect(JELLYFISH_URL, peerToken.trim());
 
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA as Permission
-      );
-      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-        console.error("Camera permission denied");
+      if (!(await grantedCameraPermissions())) {
         return;
       }
+
       // highlight-next-line
       await startCamera();
     } catch (e) {
       console.log("Error while connecting", e);
     }
   };
+
   // ...
 }
 
@@ -330,49 +464,43 @@ from `useJellyfishClient` hook.
 You can also provide some user metadata when joining. You can put there whatever
 you want, it depends on your bisness logic. In our example we provide user name.
 
-```tsx title="/screens/Connect.tsx"
-function ConnectScreen(): JSX.Element {
-  const [peerToken, setPeerToken] = useState<string>("");
+After joining the room we navigate to the next screen: Room screen.
 
+```tsx title="/screens/Connect.tsx"
+// ...
+
+function ConnectScreen({ navigation }): JSX.Element {
   // highlight-next-line
   const { connect, join } = useJellyfishClient();
-  const { startCamera } = useCamera();
 
   const connectToRoom = async () => {
     try {
-      await connect(JELLYFISH_URL, peerToken);
+      await connect(JELLYFISH_URL, peerToken.trim());
 
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA as Permission
-      );
-      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-        console.error("Camera permission denied");
+      if (!(await grantedCameraPermissions())) {
         return;
       }
 
       await startCamera();
+
       // highlight-next-line
       await join({ name: "Mobile RN Client" });
+      // highlight-next-line
+      navigation.navigate("Room");
     } catch (e) {
       console.log("Error while connecting", e);
     }
   };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <TextInput placeholder="Enter room token" value={peerToken} />
-      <Button onPress={connectToRoom} title="Connect" disabled={!peerToken} />
-      <QRCodeScanner onCodeScanned={setPeerToken} />
-    </SafeAreaView>
-  );
+  // ...
 }
+
+// ...
 ```
 
-Now the app is ready for the first test. Copy and paste peer token from the
-dashboard to the text input (or use QR code scanner - we know that copying and
-pasting is annoying on mobile devices) and press Connect button. If everything
-went well you should see a video from your camera in the frontend dashboard. Now
-onto the second part: displaying the streams from other participants.
+Now the app is ready for the first test. If everything went well you should see
+a video from your camera in the frontend dashboard. Now onto the second part:
+displaying the streams from other participants.
 
 ## Displaying streams from other participants
 
@@ -392,18 +520,90 @@ displaying a video track: `<VideoRenderer>`. It takes a track id as a prop (it
 may be local or remote track) and you can style it just like an ordinary
 `<View>`. You can even animate it!
 
-So, let's display all the participants:
+So, let's display all the participants in the simplest way possible:
 
-// code here
+```tsx title="/screens/Room.tsx"
+import React from "react";
+import { View, StyleSheet } from "react-native";
+// highlight-start
+import {
+  usePeers,
+  VideoRendererView,
+} from "@jellyfish-dev/react-native-client-sdk";
+// highlight-end
 
-You should now see your own camera. You can add another participant in the dashboard like this:
+function RoomScreen({ navigation }): JSX.Element {
+  // highlight-next-line
+  const peers = usePeers();
 
-// gif here i opis
+  return (
+    <View style={styles.container}>
+      <View style={styles.videoContainer}>
+        // highlight-start
+        {peers.map((peer) =>
+          peer.tracks[0] ? (
+            <VideoRendererView
+              trackId={peer.tracks[0].id}
+              style={styles.video}
+            />
+          ) : null
+        )}
+        // highlight-end
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#F1FAFE",
+    padding: 24,
+  },
+  videoContainer: {
+    flexDirection: "row",
+    gap: 8,
+    flexWrap: "wrap",
+  },
+  video: { width: 200, height: 200 },
+});
+
+export default RoomScreen;
+```
+
+You should now see your own camera on your mobile device. You can add another
+participant and their new track (displaying for example rotating frog) in the dashboard like
+this:
+
+![Adding new participant](./img/adding_new_track.gif)
+
+It should show up in the Room screen automatically:
+
+![Room screen](./img/room_screen.png)
 
 For your convenience in our components library we provided a component to layout
 videos in a nice grid:
 
-// code here
+```tsx title="/screens/Room.tsx"
+// highlight-next-line
+import { VideosGrid } from "../components/VideosGrid";
+
+function RoomScreen({ navigation }): JSX.Element {
+  const peers = usePeers();
+
+  return (
+    <View style={styles.container}>
+      // highlight-start
+      <VideosGrid
+        tracks={peers.map((peer) => peer.tracks[0]?.id).filter((t) => t)}
+      />
+      // highlight-end
+    </View>
+  );
+}
+```
 
 ### Gracefully leaving the room
 
@@ -411,9 +611,52 @@ To leave a rooom we'll add a button for the user. When user clicks it, we
 gracefully leave the room, close the server connection and go back to the
 Connect screen.
 
+For leaving the room and closing server connection you can use `cleanUp` method from `useJellyfishClient()` hook.
+
+After leaving the room we go back to the Connect screen.
+
 // TODO: czy na pewno cleanUp method?
 
-For leaving the room and closing server connection you can use `cleanUp` method from `useJellyfishClient()` hook.
+```tsx title="/screens/Room.tsx"
+// ...
+import {
+  usePeers,
+  VideoRendererView,
+  // highlight-next-line
+  useJellyfishClient,
+} from "@jellyfish-dev/react-native-client-sdk";
+// highlight-next-line
+import { InCallButton } from "../components/InCallButton";
+
+function RoomScreen({ navigation }): JSX.Element {
+  const peers = usePeers();
+  // highlight-start
+  const { cleanUp } = useJellyfishClient();
+
+  const onDisconnectPress = () => {
+    cleanUp();
+    navigation.goBack();
+  };
+  // highlight-end
+
+  return (
+    <View style={styles.container}>
+      <VideosGrid
+        tracks={peers.map((peer) => peer.tracks[0]?.id).filter((t) => t)}
+      />
+      // highlight-start
+      <InCallButton
+        type="disconnect"
+        iconName="phone-hangup"
+        onPress={onDisconnectPress}
+      />
+      // highlight-end
+    </View>
+  );
+}
+
+// ...
+```
 
 ## Summary
 
@@ -424,5 +667,11 @@ receives video tracks with WebRTC technology.
 But this was just the beginning. Jellyfish Client supports much more than just
 streaming camera: it can also stream audio, screencast your device's screen,
 configure your camera and audio devices, detect voice activity, control
-simulcast, bandwidth and encoding settings, display WebRTC stats and more to
-come. Check out our other tutorials to learn about those features.
+simulcast, bandwidth and encoding settings, show camera preview, display WebRTC
+stats and more to come. Check out our other tutorials to learn about those
+features.
+
+You can also take a look at our fully featured [Videoroom Demo
+example](https://github.com/jellyfish-dev/react-native-membrane-webrtc/tree/master/example):
+
+![Videoroom Demo](./img/videoroom.gif)
