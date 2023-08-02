@@ -90,7 +90,7 @@ In order for camera and audio to work you'll need to add some native configurati
 
 You need to at least set up camera permissions.
 
-On Android add to your `AndroiManifest.xml`:
+On Android add to your `AndroidManifest.xml`:
 
 ```xml title=AndroidManifest.xml
   <uses-permission android:name="android.permission.CAMERA"/>
@@ -189,14 +189,25 @@ ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
 
 // TODO nie wiem jak to ostatecznie bedzie wyglądać
 
+## (Optional) Add components library
+
+For your convenience we've prepared a library with nice looking components
+useful for following this tutorial. Feel free to use standard React Native components or your own components though!
+
+```bash
+npx expo install @expo/vector-icons expo-barcode-scanner expo-font @expo-google-fonts/noto-sans @jellyfish-dev/react-native-jellyfish-components
+```
+
+You'll also need to install [Reanimated library](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation) and [React Navigation](https://reactnavigation.org/)
+
 ## Connecting to the server and joining the room
 
 Our app will consist of two screens. The first one allows user to type, paste or
 scan the peer token and connect to the room. The second screen shows room participants with their video tracks.
 
 Note that normally the app gets the peer token from your backend. In this
-example though we skip that and just copy it from the dashboard to the app for
-your convenience. Here is how to do it:
+example though we skip that and just copy it from the dashboard to the app to
+make it easier. Here is how to do it:
 
 ![Adding mobile peer in the dashboard](./img/adding_peer.gif)
 
@@ -230,12 +241,8 @@ export default App;
 ### Connect screen
 
 The UI of the Connect screen consists of a simple text input and a few buttons.
-For your convenience we prepared a little library with useful components which
-you can use here. Feel free to use your own components though and style your app
-however you want!
-
 The flow for this screen is simple: user either copies the peer token from the
-dashboard or scans it with qr code scanner and presses Connect button. The qr
+dashboard or scans it with QR code scanner and presses Connect button. The QR
 code scanner is provided by our components library and it's completely optional,
 just for convenience.
 
@@ -246,9 +253,11 @@ The code for the UI looks like this:
 ```tsx title="/screens/Connect.tsx"
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "../components/Button";
-import { TextInput } from "../components/TextInput";
-import { QRCodeScanner } from "../components/QRCodeScanner";
+import {
+  Button,
+  TextInput,
+  QRCodeScanner,
+} from "@jellyfish-dev/react-native-jellyfish-components";
 
 function ConnectScreen({ navigation }): JSX.Element {
   const [peerToken, setPeerToken] = useState<string>("");
@@ -462,7 +471,7 @@ that your camera track is visible to other users. To do this simply use `join` f
 from `useJellyfishClient` hook.
 
 You can also provide some user metadata when joining. You can put there whatever
-you want, it depends on your bisness logic. In our example we provide user name.
+you want, it depends on your business logic. In our example we provide user name.
 
 After joining the room we navigate to the next screen: Room screen.
 
@@ -588,7 +597,7 @@ videos in a nice grid:
 
 ```tsx title="/screens/Room.tsx"
 // highlight-next-line
-import { VideosGrid } from "../components/VideosGrid";
+import { VideosGrid } from "@jellyfish-dev/react-native-jellyfish-components";
 
 function RoomScreen({ navigation }): JSX.Element {
   const peers = usePeers();
@@ -626,7 +635,7 @@ import {
   useJellyfishClient,
 } from "@jellyfish-dev/react-native-client-sdk";
 // highlight-next-line
-import { InCallButton } from "../components/InCallButton";
+import { InCallButton } from "@jellyfish-dev/react-native-jellyfish-components";
 
 function RoomScreen({ navigation }): JSX.Element {
   const peers = usePeers();
