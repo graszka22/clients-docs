@@ -1,0 +1,367 @@
+# Android Quickstart Guide
+
+## What you'll learn
+
+This tutorial will guide you through creating your first Android project which
+uses Jellyfish client. By the end of the tutorial you'll have a working
+application that connects to the frontend dashboard using WebRTC technology and
+streams and receives camera tracks.
+
+// TODO: finished app here
+
+You can check out the finished project [here](https://github.com/graszka22/clients-docs).
+
+## What do you need
+
+- a little bit of experience in creating Android apps and Jetpack Compose
+- Android Studio, Android device
+
+## Setup
+
+### Add dependencies
+
+Firstly add Jitpack repository in your app's `settings.gradle` file:
+
+```gradle
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        // highlight-next-line
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Then add Jellyfish Client dependency:
+
+```gradle
+dependencies {
+    implementation 'com.github.jellyfish-dev:android-client-sdk:<<version>>'
+}
+```
+
+### AndroidManifest.xml changes
+
+In order to connect to the backend without setting up https add this line in
+`AndroidManifest.xml`:
+
+```xml
+    <application
+        ...
+        // highlight-next-line
+        android:usesCleartextTraffic="true">
+```
+
+:::caution
+
+Don't add this line it in production apps! Using https is essential for users' security.
+
+:::
+
+### Start the Jellyfish backend
+
+For testing, we'll run the backend locally using Docker image:
+
+```bash
+docker run -p 50000-50050:50000-50050/udp \
+           -p 4000:4000/tcp \
+           -e WEBRTC_USED=true \
+           -e INTEGRATED_TURN_PORT_RANGE=50000-50050 \
+           -e INTEGRATED_TURN_IP=192.168.0.1 \
+           -e INTEGRATED_TURN_LISTEN_IP=0.0.0.0 \
+           -e SERVER_API_TOKEN=development \
+           -e VIRTUAL_HOST=192.168.0.1 \
+           -e SECRET_KEY_BASE=secret \
+           ghcr.io/jellyfish-dev/jellyfish:edge
+```
+
+Make sure to set `INTEGRATED_TURN_IP` and `VIRTUAL_HOST` to your local IP address. Without it, the mobile device won't be able to connect to the backend.
+
+:::tip
+
+To check your local IP you can use this handy command (Linux/macOS):
+
+```bash
+ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
+```
+
+:::
+
+### Start the dashboard web frontend
+
+// TODO nie wiem jak to ostatecznie bedzie wyglądać
+
+## Connecting to the server and joining the room
+
+Our app will consist of two screens. The first one allows user to type, paste or
+scan the peer token and connect to the room. The second screen shows room participants with their video tracks.
+
+Note that normally the app gets the peer token from your backend. In this
+example though we skip that and just copy it from the dashboard to the app to
+make it easier. Here is how to do it:
+
+![Adding mobile peer in the dashboard](./img/adding_peer.gif)
+
+### App structure
+
+To write the app we'll use Jetpack Compose. Firstly, create a new Android Studio
+project with empty Activity.
+
+Then, we'll replace the default app theme. Feel free to skip this step and style
+your components however you want, we just put them there for completness.
+
+```kt title=Color.kt
+package com.example.jellyfishdashboardandroid.ui.theme
+
+val seaBlue40 = Color(0xFFBFE7F8)
+val seaBlue20 = Color(0xFFF1FAFE)
+val darkBlue100 = Color(0xFF001A72)
+val white = Color(0xFFFFFFFF)
+val darkText = Color(0xFF001A72)
+```
+
+```kt title=Theme.kt
+package com.example.jellyfishdashboardandroid.ui.theme
+
+private val LightColorScheme = lightColorScheme(
+    primary = darkBlue100,
+    background = seaBlue40,
+    onPrimary = white,
+)
+
+@Composable
+fun JellyfishDashboardAndroidTheme(
+    content: @Composable () -> Unit
+) {
+    MaterialTheme(
+        colorScheme = LightColorScheme,
+        typography = Typography,
+        content = content
+    )
+}
+```
+
+```kt title=Type.kt
+package com.example.jellyfishdashboardandroid.ui.theme
+
+val Typography = Typography(
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.5.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.W600,
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 1.sp,
+    ),
+)
+```
+
+Our app will contain one activity: we'll leave it named `MainActivity` at it
+should be already created by Android Studio. This activity will be paired with
+one `ViewModel`, we'll name it `MainViewModel`:
+
+```kt title=MainViewModel.kt
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+}
+```
+
+```kt title=MainActivity.kt
+class MainActivity : ComponentActivity() {
+    private val viewModel: MainViewModel by viewModels()
+
+    //...
+}
+```
+
+In `MainActivity.kt` we'll store code responsible for displaying things (UI). In
+`MainViewModel.kt` we'll store a class responsible for the business logic of the
+app (storing data, managing state of the app, connecting to the server).
+
+Of course your app might be a lot more complicated and use a different
+structure. The two screens should be probably separated as different activities /
+fragments. For this tutorial though, this simple structure should be enough.
+
+### Connect screen
+
+The UI of the Connect screen consists of a simple text input and a few buttons.
+The flow for this screen is simple: user either copies the peer token from the
+dashboard or scans it with QR code scanner and presses Connect button. The QR
+code scanner is provided by our components library and it's completely optional,
+just for convenience.
+
+Firstly, we need to store the peer token somewhere in the ViewModel:
+
+```kt MainViewModel.kt
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    val peerToken = MutableStateFlow("")
+}
+```
+
+Then we'll add code for the UI:
+
+```kt MainActivity.kt
+class MainActivity : ComponentActivity() {
+    //...
+
+    @Composable
+    fun ConnectContent() {
+        val peerToken = viewModel.peerToken.collectAsState()
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(
+                24.dp, alignment = Alignment.CenterVertically
+            ),
+        ) {
+            OutlinedTextField(
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = CircleShape,
+                value = peerToken.value,
+                onValueChange = { it: String -> viewModel.peerToken.value = it },
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.White
+                )
+            )
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                onClick = { connect() } // we'll add this method soon
+            ) {
+                Text("Connect")
+            }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                onClick = { scanQRCode() }) { // we'll add this method soon
+                Text("QR code")
+            }
+        }
+    }
+}
+```
+
+### QR Code scanning
+
+We know that copy-paste from desktop to mobile device is annoying. That's why to
+copy the peer token from the dashboard we'll use QR code scanning. It's actually
+quite easy to add if we use a Google library to do it: no need for creating the
+UI, opening the camera, handling permissions etc. - everything is handled by the
+library :tada:
+
+Firstly, add a dependency in your `build.gradle`:
+
+```gradle title=build.gradle
+implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
+```
+
+Then scan the code like this:
+
+```kt title=MainActivity.kt
+class MainActivity : ComponentActivity() {
+    //...
+
+    private fun scanQRCode() {
+        val options = GmsBarcodeScannerOptions.Builder().setBarcodeFormats(
+            Barcode.FORMAT_QR_CODE, Barcode.FORMAT_AZTEC
+        ).enableAutoZoom().build()
+
+        val scanner = GmsBarcodeScanning.getClient(this, options)
+
+        scanner.startScan().addOnSuccessListener { barcode ->
+            val rawValue: String? = barcode.rawValue
+            if (rawValue != null) {
+                viewModel.peerToken.value = rawValue
+            }
+        }.addOnCanceledListener {
+            // Task canceled
+        }.addOnFailureListener { e ->
+            // Task failed with an exception
+        }
+    }
+}
+```
+
+Make sure to handle the errors gracefully. Now if you scan the code, the peer
+token should appear in the text field.
+
+### Handling camera permissions
+
+Before we start connecting we want to have camera permissions sorted out. On
+Android we need to ask the user for a permission to use the camera before
+creating camera track.
+
+We're lazy, so we'll use a handy Google library for that:
+
+```gradle title=build.gradle
+implementation 'com.google.accompanist:accompanist-permissions:0.28.0'
+```
+
+If we don't have camera permission yet, we'll display "Request permissions"
+button, instead of "Connect" button. The button requests camera permissions. If
+the permission is granted, we'll display "Connect" button instead:
+
+```kt title=MainActivity.kt
+    // highlight-start
+    @OptIn(ExperimentalPermissionsApi::class)
+    @Composable
+    fun ConnectButton(modifier: Modifier) {
+        val cameraPermissionState = rememberPermissionState(
+            android.Manifest.permission.CAMERA
+        )
+
+        if (cameraPermissionState.status.isGranted) {
+            Button(onClick = { viewModel.connect() }, modifier = modifier) {
+                Text("Connect")
+            }
+        } else {
+            Button(
+                onClick = { cameraPermissionState.launchPermissionRequest() }, modifier = modifier
+            ) {
+                Text("Request camera permissions")
+            }
+        }
+    }
+    // highlight-end
+
+    // ...
+
+    fun ConnectContent() {
+        // ...
+
+        Column(
+            // ...
+        ) {
+            OutlinedTextField(
+               // ...
+            )
+            // highlight-start
+            ConnectButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            )
+            // highlight-end
+            Button(
+                // ...
+            ) {
+                Text("QR code")
+            }
+        }
+    }
+```
