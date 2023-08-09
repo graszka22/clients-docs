@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import JellyfishArchitecture from "./jellyfish-architecture.mdx";
 
 # React Native / Expo Quickstart Guide
 
@@ -20,6 +21,10 @@ You can check out the finished project [here](https://github.com/graszka22/clien
   refer to the [React Native
   Guide](https://reactnative.dev/docs/getting-started) or [Expo
   Guide](https://docs.expo.dev/) to learn more
+
+## Jellyfish architecture
+
+<JellyfishArchitecture />
 
 ## Setup
 
@@ -203,13 +208,8 @@ You'll also need to install [Reanimated library](https://docs.swmansion.com/reac
 ## Connecting to the server and joining the room
 
 Our app will consist of two screens. The first one allows user to type, paste or
-scan the peer token and connect to the room. The second screen shows room participants with their video tracks.
-
-Note that normally the app gets the peer token from your backend. In this
-example though we skip that and just copy it from the dashboard to the app to
-make it easier. Here is how to do it:
-
-![Adding mobile peer in the dashboard](./img/adding_peer.gif)
+scan the peer token and connect to the room. The second screen shows room
+participants with their video tracks.
 
 ### Screens
 

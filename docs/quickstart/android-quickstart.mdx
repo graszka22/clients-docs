@@ -1,3 +1,5 @@
+import JellyfishArchitecture from "./jellyfish-architecture.mdx";
+
 # Android Quickstart Guide
 
 ## What you'll learn
@@ -14,7 +16,11 @@ You can check out the finished project [here](https://github.com/graszka22/clien
 ## What do you need
 
 - a little bit of experience in creating Android apps and Jetpack Compose
-- Android Studio, Android device
+- Android Studio IDE, Android device
+
+## Jellyfish architecture
+
+<JellyfishArchitecture />
 
 ## Setup
 
@@ -95,13 +101,8 @@ ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
 ## Connecting to the server and joining the room
 
 Our app will consist of two screens. The first one allows user to type, paste or
-scan the peer token and connect to the room. The second screen shows room participants with their video tracks.
-
-Note that normally the app gets the peer token from your backend. In this
-example though we skip that and just copy it from the dashboard to the app to
-make it easier. Here is how to do it:
-
-![Adding mobile peer in the dashboard](./img/adding_peer.gif)
+scan the peer token and connect to the room. The second screen shows room
+participants with their video tracks.
 
 ### App structure
 
@@ -177,7 +178,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
 
-    //...
+    // ...
 }
 ```
 
@@ -194,8 +195,7 @@ fragments. For this tutorial though, this simple structure should be enough.
 The UI of the Connect screen consists of a simple text input and a few buttons.
 The flow for this screen is simple: user either copies the peer token from the
 dashboard or scans it with QR code scanner and presses Connect button. The QR
-code scanner is provided by our components library and it's completely optional,
-just for convenience.
+code scanner is completely optional, but we'll show how to add it for convenience.
 
 Firstly, we need to store the peer token somewhere in the ViewModel:
 
@@ -299,6 +299,8 @@ class MainActivity : ComponentActivity() {
 
 Make sure to handle the errors gracefully. Now if you scan the code, the peer
 token should appear in the text field.
+
+![Scanning qr code](./img/scan_qr.gif)
 
 ### Handling camera permissions
 
