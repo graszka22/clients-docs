@@ -1,4 +1,6 @@
 import JellyfishArchitecture from "./jellyfish-architecture.mdx";
+import StartingJellyfishBackend from "./starting-jellyfish-backend.mdx";
+import StartingJellyfishDashboard from "./starting-dashboard.mdx";
 
 # Android Quickstart Guide
 
@@ -16,7 +18,7 @@ You can check out the finished project [here](https://github.com/graszka22/clien
 ## What do you need
 
 - a little bit of experience in creating Android apps and Jetpack Compose
-- Android Studio IDE, Android device
+- Android Studio IDE, Android device for testing
 
 ## Jellyfish architecture
 
@@ -67,36 +69,11 @@ Don't add this line it in production apps! Using https is essential for users' s
 
 ### Start the Jellyfish backend
 
-For testing, we'll run the backend locally using Docker image:
-
-```bash
-docker run -p 50000-50050:50000-50050/udp \
-           -p 4000:4000/tcp \
-           -e WEBRTC_USED=true \
-           -e INTEGRATED_TURN_PORT_RANGE=50000-50050 \
-           -e INTEGRATED_TURN_IP=192.168.0.1 \
-           -e INTEGRATED_TURN_LISTEN_IP=0.0.0.0 \
-           -e SERVER_API_TOKEN=development \
-           -e VIRTUAL_HOST=192.168.0.1 \
-           -e SECRET_KEY_BASE=secret \
-           ghcr.io/jellyfish-dev/jellyfish:edge
-```
-
-Make sure to set `INTEGRATED_TURN_IP` and `VIRTUAL_HOST` to your local IP address. Without it, the mobile device won't be able to connect to the backend.
-
-:::tip
-
-To check your local IP you can use this handy command (Linux/macOS):
-
-```bash
-ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}'
-```
-
-:::
+<StartingJellyfishBackend />
 
 ### Start the dashboard web frontend
 
-// TODO nie wiem jak to ostatecznie bedzie wyglądać
+<StartingJellyfishDashboard />
 
 ## Connecting to the server and joining the room
 
@@ -438,7 +415,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
         client.join()
     }
 
-
     // highlight-end
 }
 ```
@@ -692,9 +668,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application),
 Those methods are rather self-explanatory: `onPeerJoined()` is called when
 someone joins the room, `onPeerLeft()` is called when someone leaves the room.
 Similarly, `onTrackReady()` is called when a track is ready to display and
-`onTrackRemoved()` is called when a track is no longer streamed. One peer can
-have multiple tracks (also multiple video tracks!), but for this tutorial we'll
-assume it's always one video track.
+`onTrackRemoved()` is called when a track is no longer streamed.
 
 ### Gracefully leaving the room
 
