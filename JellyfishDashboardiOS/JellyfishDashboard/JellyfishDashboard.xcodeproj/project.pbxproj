@@ -1,0 +1,658 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4404F6782A8ED29B00F7B0C2 /* JellyfishClientSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 4404F6772A8ED29B00F7B0C2 /* JellyfishClientSdk */; };
+		44ED5B312A8677CC00EFAB09 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED5B302A8677CC00EFAB09 /* ContentViewController.swift */; };
+		44F20E692A851386005A5BBE /* JellyfishDashboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F20E682A851386005A5BBE /* JellyfishDashboardApp.swift */; };
+		44F20E6B2A851386005A5BBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F20E6A2A851386005A5BBE /* ContentView.swift */; };
+		44F20E6D2A851386005A5BBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44F20E6C2A851386005A5BBE /* Assets.xcassets */; };
+		44F20E712A851386005A5BBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44F20E702A851386005A5BBE /* Preview Assets.xcassets */; };
+		44F20E7B2A851387005A5BBE /* JellyfishDashboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F20E7A2A851387005A5BBE /* JellyfishDashboardTests.swift */; };
+		44F20E852A851387005A5BBE /* JellyfishDashboardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F20E842A851387005A5BBE /* JellyfishDashboardUITests.swift */; };
+		44F20E872A851387005A5BBE /* JellyfishDashboardUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F20E862A851387005A5BBE /* JellyfishDashboardUITestsLaunchTests.swift */; };
+		44F20E942A853296005A5BBE /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F20E932A853296005A5BBE /* QRScanner.swift */; };
+		44F20E962A855342005A5BBE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F20E952A855342005A5BBE /* Theme.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		44F20E772A851387005A5BBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44F20E5D2A851385005A5BBE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 44F20E642A851386005A5BBE;
+			remoteInfo = JellyfishDashboard;
+		};
+		44F20E812A851387005A5BBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44F20E5D2A851385005A5BBE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 44F20E642A851386005A5BBE;
+			remoteInfo = JellyfishDashboard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		44ED5B302A8677CC00EFAB09 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		44F20E652A851386005A5BBE /* JellyfishDashboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JellyfishDashboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		44F20E682A851386005A5BBE /* JellyfishDashboardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfishDashboardApp.swift; sourceTree = "<group>"; };
+		44F20E6A2A851386005A5BBE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		44F20E6C2A851386005A5BBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		44F20E6E2A851386005A5BBE /* JellyfishDashboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JellyfishDashboard.entitlements; sourceTree = "<group>"; };
+		44F20E702A851386005A5BBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		44F20E762A851387005A5BBE /* JellyfishDashboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JellyfishDashboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		44F20E7A2A851387005A5BBE /* JellyfishDashboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfishDashboardTests.swift; sourceTree = "<group>"; };
+		44F20E802A851387005A5BBE /* JellyfishDashboardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JellyfishDashboardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		44F20E842A851387005A5BBE /* JellyfishDashboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfishDashboardUITests.swift; sourceTree = "<group>"; };
+		44F20E862A851387005A5BBE /* JellyfishDashboardUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfishDashboardUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		44F20E932A853296005A5BBE /* QRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanner.swift; sourceTree = "<group>"; };
+		44F20E952A855342005A5BBE /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		44F20E622A851386005A5BBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4404F6782A8ED29B00F7B0C2 /* JellyfishClientSdk in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44F20E732A851387005A5BBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44F20E7D2A851387005A5BBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		44F20E5C2A851385005A5BBE = {
+			isa = PBXGroup;
+			children = (
+				44F20E672A851386005A5BBE /* JellyfishDashboard */,
+				44F20E792A851387005A5BBE /* JellyfishDashboardTests */,
+				44F20E832A851387005A5BBE /* JellyfishDashboardUITests */,
+				44F20E662A851386005A5BBE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		44F20E662A851386005A5BBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				44F20E652A851386005A5BBE /* JellyfishDashboard.app */,
+				44F20E762A851387005A5BBE /* JellyfishDashboardTests.xctest */,
+				44F20E802A851387005A5BBE /* JellyfishDashboardUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		44F20E672A851386005A5BBE /* JellyfishDashboard */ = {
+			isa = PBXGroup;
+			children = (
+				44F20E682A851386005A5BBE /* JellyfishDashboardApp.swift */,
+				44F20E6A2A851386005A5BBE /* ContentView.swift */,
+				44ED5B302A8677CC00EFAB09 /* ContentViewController.swift */,
+				44F20E952A855342005A5BBE /* Theme.swift */,
+				44F20E932A853296005A5BBE /* QRScanner.swift */,
+				44F20E6C2A851386005A5BBE /* Assets.xcassets */,
+				44F20E6E2A851386005A5BBE /* JellyfishDashboard.entitlements */,
+				44F20E6F2A851386005A5BBE /* Preview Content */,
+			);
+			path = JellyfishDashboard;
+			sourceTree = "<group>";
+		};
+		44F20E6F2A851386005A5BBE /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				44F20E702A851386005A5BBE /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		44F20E792A851387005A5BBE /* JellyfishDashboardTests */ = {
+			isa = PBXGroup;
+			children = (
+				44F20E7A2A851387005A5BBE /* JellyfishDashboardTests.swift */,
+			);
+			path = JellyfishDashboardTests;
+			sourceTree = "<group>";
+		};
+		44F20E832A851387005A5BBE /* JellyfishDashboardUITests */ = {
+			isa = PBXGroup;
+			children = (
+				44F20E842A851387005A5BBE /* JellyfishDashboardUITests.swift */,
+				44F20E862A851387005A5BBE /* JellyfishDashboardUITestsLaunchTests.swift */,
+			);
+			path = JellyfishDashboardUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		44F20E642A851386005A5BBE /* JellyfishDashboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44F20E8A2A851387005A5BBE /* Build configuration list for PBXNativeTarget "JellyfishDashboard" */;
+			buildPhases = (
+				44F20E612A851386005A5BBE /* Sources */,
+				44F20E622A851386005A5BBE /* Frameworks */,
+				44F20E632A851386005A5BBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JellyfishDashboard;
+			packageProductDependencies = (
+				4404F6772A8ED29B00F7B0C2 /* JellyfishClientSdk */,
+			);
+			productName = JellyfishDashboard;
+			productReference = 44F20E652A851386005A5BBE /* JellyfishDashboard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		44F20E752A851387005A5BBE /* JellyfishDashboardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44F20E8D2A851387005A5BBE /* Build configuration list for PBXNativeTarget "JellyfishDashboardTests" */;
+			buildPhases = (
+				44F20E722A851387005A5BBE /* Sources */,
+				44F20E732A851387005A5BBE /* Frameworks */,
+				44F20E742A851387005A5BBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				44F20E782A851387005A5BBE /* PBXTargetDependency */,
+			);
+			name = JellyfishDashboardTests;
+			productName = JellyfishDashboardTests;
+			productReference = 44F20E762A851387005A5BBE /* JellyfishDashboardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		44F20E7F2A851387005A5BBE /* JellyfishDashboardUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44F20E902A851387005A5BBE /* Build configuration list for PBXNativeTarget "JellyfishDashboardUITests" */;
+			buildPhases = (
+				44F20E7C2A851387005A5BBE /* Sources */,
+				44F20E7D2A851387005A5BBE /* Frameworks */,
+				44F20E7E2A851387005A5BBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				44F20E822A851387005A5BBE /* PBXTargetDependency */,
+			);
+			name = JellyfishDashboardUITests;
+			productName = JellyfishDashboardUITests;
+			productReference = 44F20E802A851387005A5BBE /* JellyfishDashboardUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		44F20E5D2A851385005A5BBE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					44F20E642A851386005A5BBE = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					44F20E752A851387005A5BBE = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 44F20E642A851386005A5BBE;
+					};
+					44F20E7F2A851387005A5BBE = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 44F20E642A851386005A5BBE;
+					};
+				};
+			};
+			buildConfigurationList = 44F20E602A851385005A5BBE /* Build configuration list for PBXProject "JellyfishDashboard" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 44F20E5C2A851385005A5BBE;
+			packageReferences = (
+				4404F6762A8ED29B00F7B0C2 /* XCRemoteSwiftPackageReference "ios-client-sdk" */,
+			);
+			productRefGroup = 44F20E662A851386005A5BBE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				44F20E642A851386005A5BBE /* JellyfishDashboard */,
+				44F20E752A851387005A5BBE /* JellyfishDashboardTests */,
+				44F20E7F2A851387005A5BBE /* JellyfishDashboardUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		44F20E632A851386005A5BBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F20E712A851386005A5BBE /* Preview Assets.xcassets in Resources */,
+				44F20E6D2A851386005A5BBE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44F20E742A851387005A5BBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44F20E7E2A851387005A5BBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		44F20E612A851386005A5BBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44ED5B312A8677CC00EFAB09 /* ContentViewController.swift in Sources */,
+				44F20E942A853296005A5BBE /* QRScanner.swift in Sources */,
+				44F20E962A855342005A5BBE /* Theme.swift in Sources */,
+				44F20E6B2A851386005A5BBE /* ContentView.swift in Sources */,
+				44F20E692A851386005A5BBE /* JellyfishDashboardApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44F20E722A851387005A5BBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F20E7B2A851387005A5BBE /* JellyfishDashboardTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44F20E7C2A851387005A5BBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F20E872A851387005A5BBE /* JellyfishDashboardUITestsLaunchTests.swift in Sources */,
+				44F20E852A851387005A5BBE /* JellyfishDashboardUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		44F20E782A851387005A5BBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 44F20E642A851386005A5BBE /* JellyfishDashboard */;
+			targetProxy = 44F20E772A851387005A5BBE /* PBXContainerItemProxy */;
+		};
+		44F20E822A851387005A5BBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 44F20E642A851386005A5BBE /* JellyfishDashboard */;
+			targetProxy = 44F20E812A851387005A5BBE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		44F20E882A851387005A5BBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		44F20E892A851387005A5BBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		44F20E8B2A851387005A5BBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JellyfishDashboard/JellyfishDashboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"JellyfishDashboard/Preview Content\"";
+				DEVELOPMENT_TEAM = J5FM626PE2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jellyfish.JellyfishDashboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		44F20E8C2A851387005A5BBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JellyfishDashboard/JellyfishDashboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"JellyfishDashboard/Preview Content\"";
+				DEVELOPMENT_TEAM = J5FM626PE2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for scanning QR code.";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jellyfish.JellyfishDashboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		44F20E8E2A851387005A5BBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J5FM626PE2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jellyfish.JellyfishDashboardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JellyfishDashboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/JellyfishDashboard";
+			};
+			name = Debug;
+		};
+		44F20E8F2A851387005A5BBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J5FM626PE2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jellyfish.JellyfishDashboardTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JellyfishDashboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/JellyfishDashboard";
+			};
+			name = Release;
+		};
+		44F20E912A851387005A5BBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J5FM626PE2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jellyfish.JellyfishDashboardUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = JellyfishDashboard;
+			};
+			name = Debug;
+		};
+		44F20E922A851387005A5BBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J5FM626PE2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jellyfish.JellyfishDashboardUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = JellyfishDashboard;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		44F20E602A851385005A5BBE /* Build configuration list for PBXProject "JellyfishDashboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44F20E882A851387005A5BBE /* Debug */,
+				44F20E892A851387005A5BBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		44F20E8A2A851387005A5BBE /* Build configuration list for PBXNativeTarget "JellyfishDashboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44F20E8B2A851387005A5BBE /* Debug */,
+				44F20E8C2A851387005A5BBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		44F20E8D2A851387005A5BBE /* Build configuration list for PBXNativeTarget "JellyfishDashboardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44F20E8E2A851387005A5BBE /* Debug */,
+				44F20E8F2A851387005A5BBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		44F20E902A851387005A5BBE /* Build configuration list for PBXNativeTarget "JellyfishDashboardUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44F20E912A851387005A5BBE /* Debug */,
+				44F20E922A851387005A5BBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4404F6762A8ED29B00F7B0C2 /* XCRemoteSwiftPackageReference "ios-client-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jellyfish-dev/ios-client-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4404F6772A8ED29B00F7B0C2 /* JellyfishClientSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4404F6762A8ED29B00F7B0C2 /* XCRemoteSwiftPackageReference "ios-client-sdk" */;
+			productName = JellyfishClientSdk;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 44F20E5D2A851385005A5BBE /* Project object */;
+}
