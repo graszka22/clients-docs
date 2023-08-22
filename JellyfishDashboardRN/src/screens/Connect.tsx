@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
-  Permission,
+  type Permission,
   PermissionsAndroid,
   Platform,
 } from 'react-native';
